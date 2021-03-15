@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t acaporrini/fibonacci_calculator_client_test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true acaporrini/fibonacci_calculator_client_test npm test -- --coverage
+
+after_success:
+  # Build production images
+  - docker build -t acaporrini/fibonacci_calculator_client ./client
+  - docker build -t acaporrini/fibonacci_calculator_server ./server
+  - docker build -t acaporrini/fibonacci_calculator_nginx ./nginx
+  - docker build -t acaporrini/fibonacci_calculator_worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push acaporrini/fibonacci_calculator_client
+  - docker push acaporrini/fibonacci_calculator_server
+  - docker push acaporrini/fibonacci_calculator_nginx
+  - docker push acaporrini/fibonacci_calculator_worker
+
