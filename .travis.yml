@@ -21,3 +21,14 @@ after_success:
   - docker push acaporrini/fibonacci_calculator_nginx
   - docker push acaporrini/fibonacci_calculator_worker
 
+deploy:
+  provider: elasticbeanstalk
+  region: 'eu-west-1'
+  app: 'fibonacci_calculator'
+  env: 'Fibonaccicalculator-env'
+  bucket_name: 'elasticbeanstalk-eu-west-1-363584523866'
+  bucket_path: 'fibonacci_calculator'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
