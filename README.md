@@ -7,6 +7,7 @@ A dummy app to test a complex mutli-container Docker setup with:
 - Redis
 - Postgres
 - Nginx
+- AWS (ElasticBeanstalk, ECS, RDS, Elasticache
 
 # Install
 Clone the repo,  enter the root  dir and run
@@ -21,3 +22,4 @@ then visit:
 ```
 http://localhost:3050
 ```
+
